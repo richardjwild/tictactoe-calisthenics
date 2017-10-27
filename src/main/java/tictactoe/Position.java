@@ -2,8 +2,8 @@ package tictactoe;
 
 public class Position {
 
-    public static Position position(Column c, Row r) {
-        return new Position(c, r);
+    public static Position position(Column column, Row row) {
+        return new Position(column, row);
     }
 
     private final Column column;
