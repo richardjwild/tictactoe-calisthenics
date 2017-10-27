@@ -20,15 +20,21 @@ public class GameJudge {
             asList(position(RIGHT, TOP), position(CENTER, MIDDLE), position(LEFT, BOTTOM))
     );
 
-    public static State decideResult(Board board) {
-        if (playerHasWon(board))
+    private Board board;
+
+    public GameJudge(Board board) {
+        this.board = board;
+    }
+
+    public State decideResult() {
+        if (playerHasWon())
             return State.GAME_OVER;
         if (board.isFull())
             return State.STALEMATE;
         return State.PLAYING;
     }
 
-    private static boolean playerHasWon(Board board) {
+    private boolean playerHasWon() {
         return WINNING_COMBINATIONS.stream().anyMatch(board::allTakenByCurrentPlayer);
     }
 }

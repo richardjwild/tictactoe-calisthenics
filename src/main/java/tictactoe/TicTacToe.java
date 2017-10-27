@@ -1,6 +1,5 @@
 package tictactoe;
 
-import static tictactoe.GameJudge.decideResult;
 import static tictactoe.Position.position;
 
 public class TicTacToe {
@@ -27,7 +26,7 @@ public class TicTacToe {
 
     public TicTacToe at(Column column, Row row) {
         board.take(position(column, row));
-        gameState = decideResult(board);
+        gameState = new GameJudge(board).decideResult();
         return this;
     }
 
