@@ -5,7 +5,7 @@ import static tictactoe.Position.position;
 public class TicTacToe {
 
     private Board board = new Board();
-    private State gameState = State.PLAYING;
+    private GameState gameState = GameState.PLAYING;
 
     public TicTacToe play(Player player) {
         preventPlayIfGameIsOver();
@@ -15,7 +15,7 @@ public class TicTacToe {
     }
 
     private void preventPlayIfGameIsOver() {
-        if (gameState != State.PLAYING)
+        if (gameState != GameState.PLAYING)
             throw new GameIsOverException();
     }
 
@@ -31,10 +31,10 @@ public class TicTacToe {
     }
 
     public boolean hasWon() {
-        return gameState == State.GAME_OVER;
+        return gameState == GameState.GAME_OVER;
     }
 
     public boolean isStalemated() {
-        return gameState == State.STALEMATE;
+        return gameState == GameState.STALEMATE;
     }
 }

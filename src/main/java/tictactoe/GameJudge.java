@@ -26,12 +26,12 @@ public class GameJudge {
         this.board = board;
     }
 
-    public State decideResult() {
+    public GameState decideResult() {
         if (playerHasWon())
-            return State.GAME_OVER;
+            return GameState.GAME_OVER;
         if (board.isFull())
-            return State.STALEMATE;
-        return State.PLAYING;
+            return GameState.STALEMATE;
+        return GameState.PLAYING;
     }
 
     private boolean playerHasWon() {
