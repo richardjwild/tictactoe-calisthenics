@@ -1,25 +1,41 @@
 package tictactoe;
 
-import tictactoe.internal.Board;
-
-import static java.util.Optional.ofNullable;
+import static tictactoe.GameJudge.decideResult;
+import static tictactoe.Position.position;
 
 public class TicTacToe {
 
-    private Player lastPlayer;
-    private Board board = new Board(this);
-    private boolean over = false;
+    private Board board = new Board();
+    private State gameState = State.PLAYING;
 
-    public Board play(Player player) {
-        if (over)
-            throw new GameIsOverException();
-        if (player == ofNullable(lastPlayer).orElse(Player.O))
-            throw new NotYourTurnException();
-        lastPlayer = player;
-        return board.forPlayer(player);
+    public TicTacToe play(Player player) {
+        preventPlayIfGameIsOver();
+        preventPlayIfNotTheirTurn(player);
+        board.nextPlayerIs(player);
+        return this;
     }
 
-    public void over() {
-        over = true;
+    private void preventPlayIfGameIsOver() {
+        if (gameState != State.PLAYING)
+            throw new GameIsOverException();
+    }
+
+    private void preventPlayIfNotTheirTurn(Player player) {
+        if (board.lastPlayerWas(player))
+            throw new NotYourTurnException();
+    }
+
+    public TicTacToe at(Column column, Row row) {
+        board.take(position(column, row));
+        gameState = decideResult(board);
+        return this;
+    }
+
+    public boolean hasWon() {
+        return gameState == State.GAME_OVER;
+    }
+
+    public boolean isStalemated() {
+        return gameState == State.STALEMATE;
     }
 }
